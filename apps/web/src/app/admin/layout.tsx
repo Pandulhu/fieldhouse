@@ -4,7 +4,7 @@ import AdminLayoutShell from "./AdminLayoutShell"
 
 export default async function AdminLayout({
   children,
-}: {
+}: {h
   children: React.ReactNode
 }) {
   const supabase = createSupabaseServerClient()
@@ -12,7 +12,7 @@ export default async function AdminLayout({
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user) redirect("/")
+  if (!user) redirect("/login")
 
   const { data: profile } = await supabase
     .from("users")
@@ -20,7 +20,7 @@ export default async function AdminLayout({
     .eq("id", user.id)
     .single()
 
-  if (!profile) redirect("/")
+  if (!profile) redirect("/login")
 
   const { data: league } = await supabase
     .from("leagues")
