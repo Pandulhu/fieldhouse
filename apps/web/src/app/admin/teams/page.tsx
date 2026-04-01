@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react"
 import { createSupabaseBrowserClient } from "../../../lib/supabase-browser"
 import { CreateTeamSchema } from "@fieldhouse/validators"
-import type { Sport } from "@fieldhouse/types"
+import { Sport } from "@fieldhouse/types"
 import DataTable from "../../../components/ui/DataTable"
 import Modal from "../../../components/ui/Modal"
 

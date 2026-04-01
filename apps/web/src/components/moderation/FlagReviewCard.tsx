@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { createSupabaseBrowserClient } from "../../lib/supabase-browser"
-import type { FlagAction } from "@fieldhouse/types"
+import { FlagAction } from "@fieldhouse/types"
 
 interface FlagReviewCardProps {
   flagId: string

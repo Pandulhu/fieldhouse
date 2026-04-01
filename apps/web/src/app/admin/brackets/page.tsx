@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react"
 import { createSupabaseBrowserClient } from "../../../lib/supabase-browser"
-import type { Season, BracketType, Team, BracketData, BracketRound } from "@fieldhouse/types"
+import { BracketType } from "@fieldhouse/types"
+import type { Season, Team, BracketData, BracketRound } from "@fieldhouse/types"
 
 interface ScheduleRow {
   id: string
@@ -16,7 +17,7 @@ export default function BracketsPage() {
   const [selectedSeasonId, setSelectedSeasonId] = useState("")
   const [schedule, setSchedule] = useState<ScheduleRow | null>(null)
   const [teams, setTeams] = useState<Pick<Team, "id" | "name">[]>([])
-  const [bracketType, setBracketType] = useState<BracketType>("single_elimination")
+  const [bracketType, setBracketType] = useState<BracketType>(BracketType.SingleElimination)
   const [generating, setGenerating] = useState(false)
 
   const supabase = createSupabaseBrowserClient()

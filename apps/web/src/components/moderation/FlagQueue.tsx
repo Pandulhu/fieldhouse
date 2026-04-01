@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react"
 import { createSupabaseBrowserClient } from "../../lib/supabase-browser"
 import FlagReviewCard from "./FlagReviewCard"
-import type { FlagAction } from "@fieldhouse/types"
+import { FlagAction } from "@fieldhouse/types"
 
 interface FlagRow {
   id: string

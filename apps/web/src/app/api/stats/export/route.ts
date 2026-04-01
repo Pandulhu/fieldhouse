@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createSupabaseServerClient, createSupabaseServiceClient } from "../../../lib/supabase-server"
+import { createSupabaseServerClient, createSupabaseServiceClient } from "../../../../lib/supabase-server"
 import { generateStatsCsv } from "@fieldhouse/stats-engine"
 import { UserRole, Sport, PlayerStatsAggregate, Player } from "@fieldhouse/types"
 import { calculateDerivedStats } from "@fieldhouse/stats-engine"

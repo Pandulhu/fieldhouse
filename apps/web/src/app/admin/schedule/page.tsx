@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react"
 import { createSupabaseBrowserClient } from "../../../lib/supabase-browser"
 import { CreateGameSchema } from "@fieldhouse/validators"
-import type { Game, Team } from "@fieldhouse/types"
+import type { Team } from "@fieldhouse/types"
 import DataTable from "../../../components/ui/DataTable"
 
 interface GameRow extends Record<string, unknown> {
@@ -128,7 +128,7 @@ export default function SchedulePage() {
         </select>
       </div>
 
-      <DataTable columns={columns} data={games as unknown as Record<string, unknown>[]} />
+      <DataTable<GameRow> columns={columns} data={games} />
 
       {/* Create form */}
       <div className="mt-8 bg-surface rounded-xl border border-gray-200 p-6">

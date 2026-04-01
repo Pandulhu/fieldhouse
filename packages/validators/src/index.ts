@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { Sport, UserRole, GameStatus, MessageType, ConversationType, BracketType } from "@fieldhouse/types"
+import { Sport, GameStatus, MessageType, ConversationType } from "@fieldhouse/types"
 
 // ─── PRIMITIVES ───────────────────────────────────────────────────────────────
 

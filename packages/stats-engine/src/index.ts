@@ -1,4 +1,5 @@
-import { Sport, PlayerStatsAggregate, Player } from "@fieldhouse/types"
+import { Sport } from "@fieldhouse/types"
+import type { PlayerStatsAggregate } from "@fieldhouse/types"
 import Papa from "papaparse"
 
 // ─── STAT SCHEMAS ─────────────────────────────────────────────────────────────

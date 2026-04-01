@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react"
 import { createSupabaseBrowserClient } from "../../../lib/supabase-browser"
-import type { Sport, Team } from "@fieldhouse/types"
+import { Sport } from "@fieldhouse/types"
+import type { Team } from "@fieldhouse/types"
 import DataTable from "../../../components/ui/DataTable"
 
 interface StatRow extends Record<string, unknown> {
