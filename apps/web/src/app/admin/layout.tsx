@@ -4,7 +4,7 @@ import AdminLayoutShell from "./AdminLayoutShell"
 
 export default async function AdminLayout({
   children,
-}: {h
+}: {
   children: React.ReactNode
 }) {
   const supabase = createSupabaseServerClient()
