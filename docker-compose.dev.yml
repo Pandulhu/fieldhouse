@@ -1,5 +1,3 @@
-version: "3.8"
-
 # Fieldhouse — Quick Dev Testing
 # Uses just Postgres + the web app for fast local testing.
 # For full Supabase (Auth, Realtime, Storage): use `supabase start` instead.
@@ -38,7 +36,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-http://localhost:54321}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-placeholder}

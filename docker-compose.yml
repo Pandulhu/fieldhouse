@@ -1,5 +1,3 @@
-version: "3.8"
-
 # Fieldhouse — Local Development Stack
 # Runs: Supabase (Postgres + Auth + Realtime + Storage) + Next.js web admin
 #
