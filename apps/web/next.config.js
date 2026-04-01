@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   transpilePackages: ["@fieldhouse/types", "@fieldhouse/validators", "@fieldhouse/stats-engine"],
   images: {
-    domains: ["your-project.supabase.co"],
+    remotePatterns: [
+      { protocol: "https", hostname: "*.supabase.co" },
+      { protocol: "http", hostname: "localhost" },
+    ],
   },
 }
 

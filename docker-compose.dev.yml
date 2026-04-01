@@ -1,0 +1,52 @@
+version: "3.8"
+
+# Fieldhouse — Quick Dev Testing
+# Uses just Postgres + the web app for fast local testing.
+# For full Supabase (Auth, Realtime, Storage): use `supabase start` instead.
+#
+# Usage:
+#   docker compose -f docker-compose.dev.yml up -d
+#   Open http://localhost:3000
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: fieldhouse-db
+    restart: unless-stopped
+    ports:
+      - "54322:5432"
+    environment:
+      POSTGRES_PASSWORD: fieldhouse_dev
+      POSTGRES_DB: fieldhouse
+    volumes:
+      - fieldhouse_pgdata:/var/lib/postgresql/data
+      - ./supabase/migrations/001_initial_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./supabase/seed/dev_seed.sql:/docker-entrypoint-initdb.d/03_seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web.dev
+    container_name: fieldhouse-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-http://localhost:54321}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-placeholder}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-placeholder}
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./packages:/app/packages
+
+volumes:
+  fieldhouse_pgdata:

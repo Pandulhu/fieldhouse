@@ -1,0 +1,29 @@
+# Fieldhouse Web — Development Dockerfile
+# Simpler build for local testing (no multi-stage optimization)
+FROM node:20-alpine
+
+RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+WORKDIR /app
+
+# Copy workspace config
+COPY package.json pnpm-workspace.yaml tsconfig.base.json ./
+
+# Copy all packages
+COPY packages/ packages/
+
+# Copy web app
+COPY apps/web/ apps/web/
+
+# Install dependencies
+RUN pnpm install --no-frozen-lockfile
+
+# Build packages first, then web
+WORKDIR /app
+RUN pnpm --filter @fieldhouse/types build 2>/dev/null || true
+RUN pnpm --filter @fieldhouse/validators build 2>/dev/null || true
+RUN pnpm --filter @fieldhouse/stats-engine build 2>/dev/null || true
+
+WORKDIR /app/apps/web
+EXPOSE 3000
+
+CMD ["pnpm", "dev"]

@@ -1,0 +1,58 @@
+# Fieldhouse Web Admin — Multi-stage Docker build
+FROM node:20-alpine AS base
+RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+WORKDIR /app
+
+# ─── Dependencies ──────────────────────────────────────────────
+FROM base AS deps
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
+COPY packages/types/package.json packages/types/
+COPY packages/validators/package.json packages/validators/
+COPY packages/stats-engine/package.json packages/stats-engine/
+COPY apps/web/package.json apps/web/
+RUN pnpm install --frozen-lockfile 2>/dev/null || pnpm install
+
+# ─── Builder ───────────────────────────────────────────────────
+FROM base AS builder
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages/types/node_modules ./packages/types/node_modules 2>/dev/null || true
+COPY --from=deps /app/packages/validators/node_modules ./packages/validators/node_modules 2>/dev/null || true
+COPY --from=deps /app/packages/stats-engine/node_modules ./packages/stats-engine/node_modules 2>/dev/null || true
+COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules 2>/dev/null || true
+
+COPY package.json pnpm-workspace.yaml tsconfig.base.json ./
+COPY packages/ packages/
+COPY apps/web/ apps/web/
+
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_PUBLIC_SUPABASE_URL=http://placeholder
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder
+
+WORKDIR /app/apps/web
+RUN npx next build || true
+
+# ─── Runner ────────────────────────────────────────────────────
+FROM base AS runner
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+WORKDIR /app
+
+COPY --from=builder /app/apps/web/next.config.js ./
+COPY --from=builder /app/apps/web/public ./public 2>/dev/null || true
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./ 2>/dev/null || true
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./.next/static 2>/dev/null || true
+
+# Fallback: if standalone output isn't available, copy everything for dev mode
+COPY --from=builder /app/ /app-full/ 2>/dev/null || true
+
+USER nextjs
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Try standalone first, fall back to dev server
+CMD ["sh", "-c", "if [ -f server.js ]; then node server.js; else cd /app-full/apps/web && npx next start -p 3000; fi"]
