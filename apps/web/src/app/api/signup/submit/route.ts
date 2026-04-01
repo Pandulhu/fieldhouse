@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createSupabaseServiceClient } from "../../../../lib/supabase-server"
+import { createSupabaseServerClient, createSupabaseServiceClient } from "../../../../lib/supabase-server"
 import { SubmitSignupFormSchema } from "@fieldhouse/validators"
 
 export async function POST(req: NextRequest) {
@@ -14,6 +14,18 @@ export async function POST(req: NextRequest) {
   }
 
   const { formId, data } = parsed.data
+
+  // Try to get authenticated user if available
+  let submittedBy: string | null = null
+  try {
+    const supabaseAuth = createSupabaseServerClient()
+    const { data: { user: authUser } } = await supabaseAuth.auth.getUser()
+    if (authUser) {
+      submittedBy = authUser.id
+    }
+  } catch {
+    // Not authenticated — that's fine for public forms
+  }
 
   // Use service client since this may be unauthenticated
   const service = createSupabaseServiceClient()
@@ -41,7 +53,7 @@ export async function POST(req: NextRequest) {
     .from("form_submissions")
     .insert({
       form_id: formId,
-      submitted_by: "anonymous",
+      submitted_by: submittedBy,
       data,
     })
 
