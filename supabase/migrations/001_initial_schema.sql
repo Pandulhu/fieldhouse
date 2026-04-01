@@ -60,7 +60,7 @@ alter table leagues enable row level security;
 
 -- ─── USERS ──────────────────────────────────────────────────
 
-create table users (
+create table profiles (
   id              uuid primary key references auth.users(id) on delete cascade,
   display_name    text not null,
   role            user_role not null,
@@ -84,7 +84,7 @@ create table users (
   created_at      timestamptz not null default now()
 );
 
-alter table users enable row level security;
+alter table profiles enable row level security;
 
 -- ─── TEAMS ──────────────────────────────────────────────────
 
@@ -275,7 +275,7 @@ alter table form_submissions enable row level security;
 
 -- ─── INDEXES ─────────────────────────────────────────────────
 
-create index idx_users_league       on users(league_id);
+create index idx_profiles_league       on profiles(league_id);
 create index idx_teams_league       on teams(league_id);
 create index idx_players_team       on players(team_id);
 create index idx_players_parent     on players(parent_user_id);

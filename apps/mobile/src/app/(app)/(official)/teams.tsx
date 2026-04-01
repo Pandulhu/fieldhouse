@@ -39,7 +39,7 @@ export default function TeamsScreen() {
         let coachName: string | null = null
         if (coachId) {
           const { data: coach } = await supabase
-            .from("users")
+            .from("profiles")
             .select("display_name")
             .eq("id", coachId)
             .single()

@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   }
 
   const { data: profile } = await supabase
-    .from("users")
+    .from("profiles")
     .select("role, league_id")
     .eq("id", user.id)
     .single()

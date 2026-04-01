@@ -10,7 +10,7 @@ export async function PATCH(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const { data: profile } = await supabase
-    .from("users")
+    .from("profiles")
     .select("role, league_id")
     .eq("id", user.id)
     .single()

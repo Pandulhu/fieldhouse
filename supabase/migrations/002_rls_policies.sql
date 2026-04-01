@@ -8,13 +8,13 @@
 -- Returns the current user's role within their league
 create or replace function current_user_role()
 returns user_role as $$
-  select role from users where id = auth.uid()
+  select role from profiles where id = auth.uid()
 $$ language sql security definer stable;
 
 -- Returns the current user's league_id
 create or replace function current_league_id()
 returns uuid as $$
-  select league_id from users where id = auth.uid()
+  select league_id from profiles where id = auth.uid()
 $$ language sql security definer stable;
 
 -- Checks if the current user is a league official
@@ -42,15 +42,15 @@ create policy "League officials can update their league"
 -- ─── USERS ───────────────────────────────────────────────────
 
 create policy "Users can view members of their league"
-  on users for select
+  on profiles for select
   using (league_id = current_league_id());
 
 create policy "Users can update their own profile"
-  on users for update
+  on profiles for update
   using (id = auth.uid());
 
 create policy "League officials can manage users in their league"
-  on users for all
+  on profiles for all
   using (is_league_official() and league_id = current_league_id());
 
 -- ─── TEAMS ───────────────────────────────────────────────────

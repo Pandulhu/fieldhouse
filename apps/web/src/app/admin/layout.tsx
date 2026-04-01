@@ -15,7 +15,7 @@ export default async function AdminLayout({
   if (!user) redirect("/login")
 
   const { data: profile } = await supabase
-    .from("users")
+    .from("profiles")
     .select("display_name, avatar_url, league_id, role")
     .eq("id", user.id)
     .single()

@@ -59,7 +59,7 @@ VALUES (
 -- ─── 2. USERS ──────────────────────────────────────────────
 -- Public users table entries for each role
 
-INSERT INTO users (id, display_name, role, league_id, email, team_ids) VALUES
+INSERT INTO profiles (id, display_name, role, league_id, email, team_ids) VALUES
   ('11111111-1111-1111-1111-111111111111', 'League Official', 'league_official',
    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'official@fieldhouse.dev', '{}'),
   ('22222222-2222-2222-2222-222222222222', 'Coach Martinez', 'coach',

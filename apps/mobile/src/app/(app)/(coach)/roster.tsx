@@ -39,7 +39,7 @@ export default function RosterScreen() {
         let parentName: string | null = null
         if (player.parentUserId) {
           const { data: parent } = await supabase
-            .from("users")
+            .from("profiles")
             .select("display_name")
             .eq("id", player.parentUserId)
             .single()

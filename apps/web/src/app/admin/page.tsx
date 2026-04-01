@@ -17,7 +17,7 @@ export default async function AdminDashboard() {
   } = await supabase.auth.getUser()
 
   const { data: profile } = await supabase
-    .from("users")
+    .from("profiles")
     .select("league_id")
     .eq("id", user?.id ?? "")
     .single()

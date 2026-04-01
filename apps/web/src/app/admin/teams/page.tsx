@@ -50,7 +50,7 @@ export default function TeamsPage() {
         const coachIds = (t.coach_ids as string[]) ?? []
         if (coachIds.length > 0) {
           const { data: coach } = await supabase
-            .from("users")
+            .from("profiles")
             .select("display_name")
             .eq("id", coachIds[0])
             .single()
@@ -75,7 +75,7 @@ export default function TeamsPage() {
 
   const handleCreate = async () => {
     const { data: profile } = await supabase
-      .from("users")
+      .from("profiles")
       .select("league_id")
       .single()
 

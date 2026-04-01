@@ -65,7 +65,7 @@ export default function SchedulePage() {
 
   const handleCreate = async () => {
     const { data: profile } = await supabase
-      .from("users")
+      .from("profiles")
       .select("league_id")
       .single()
 

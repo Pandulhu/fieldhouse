@@ -22,7 +22,7 @@ COPY tsconfig.base.json ./
 ENV NEXT_TELEMETRY_DISABLED=1
 # Build-time placeholder values (overridden at runtime)
 ENV NEXT_PUBLIC_SUPABASE_URL=https://dxhusmlvdonlgornovfa.supabase.co
-ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4aHVzbWx2ZG9ubGdvcm5vdmZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5ODAwNTcsImV4cCI6MjA5MDU1NjA1N30.vvAaNdLCcjp5ixM1rMNMBqwv0_7zNC4N40R4deCoTNs
 
 WORKDIR /app/apps/web
 RUN npx next build

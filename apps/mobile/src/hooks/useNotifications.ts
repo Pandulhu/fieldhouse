@@ -29,7 +29,7 @@ export const useRegisterPushToken = () => {
       })
 
       const { error } = await supabase
-        .from("users")
+        .from("profiles")
         .update({ push_token: token })
         .eq("id", user.id)
 

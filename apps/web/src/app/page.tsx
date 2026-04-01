@@ -35,7 +35,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <span className="text-xl font-bold tracking-tight">Fieldhouse</span>
           <Link
-            href="/admin"
+            href="/login"
             className="text-sm font-medium hover:underline"
           >
             Admin Login
@@ -53,7 +53,7 @@ export default function LandingPage() {
             Youth Sports, All In One Place
           </p>
           <Link
-            href="/admin"
+            href="/login"
             className="inline-block bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3 rounded-lg text-lg transition-colors"
           >
             Get Your League License

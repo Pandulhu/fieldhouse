@@ -68,7 +68,7 @@ export default function SettingsScreen() {
 
     const load = async () => {
       const { data, error } = await supabase
-        .from("users")
+        .from("profiles")
         .select("notification_prefs")
         .eq("id", user.id)
         .single()
@@ -99,7 +99,7 @@ export default function SettingsScreen() {
       setSaving(true)
 
       const { error } = await supabase
-        .from("users")
+        .from("profiles")
         .update({ notification_prefs: next })
         .eq("id", user.id)
 

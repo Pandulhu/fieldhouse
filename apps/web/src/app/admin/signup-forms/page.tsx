@@ -43,7 +43,7 @@ export default function SignupFormsPage() {
   }
 
   const handleCreate = async () => {
-    const { data: profile } = await supabase.from("users").select("league_id").single()
+    const { data: profile } = await supabase.from("profiles").select("league_id").single()
     if (!profile) return
 
     const payload = {

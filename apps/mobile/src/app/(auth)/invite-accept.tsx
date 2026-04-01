@@ -58,7 +58,7 @@ export default function InviteAcceptScreen() {
         return;
       }
 
-      const { error: insertError } = await supabase.from("users").insert({
+      const { error: insertError } = await supabase.from("profiles").insert({
         id: authData.user.id,
         display_name: displayName.trim(),
         email: email.trim(),
